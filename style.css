@@ -1,53 +1,66 @@
 *{
-    margin: 0%;
-    padding: 0%;
-    background-color: #BBC7A4;
-}
-body{
-    text-align: center;
-    justify-content: center;
+    margin: 0px;
+    padding: 0px;
 }
 
-.con{
-    padding-top: 5px;
-    height: 88vh;
+body{
+    background-color: #ffafcc;
+}
+.sf{
+    justify-content: center;
+    text-align: center;
+    margin: 2%;
+    font-size: 2rem;
+    color:#cdb4db;
+}
+.name{
+    text-align: center;
+    font-size: 2rem;
+    padding: 2%;
+}
+.upper{
+    display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 80vmin;
-    display: flex;
-    border: solid black;
-    border-radius: 5%;
 }
 .fix{
     display: flex;
     justify-content: center;
     align-items: center;
-}
-.calci{
-    height: 70vmin;
+    height: 80vmin;
     width: 80vmin;
+}
+.take{
     display: flex;
     justify-content: center;
+    background-color: #a2d2ff;
     align-items: center;
     flex-wrap: wrap;
+    height: 80vmin;
+    width: 80vmin;
+    border: solid;
 }
 .box{
-    height: 10vmin;
-    width: 13vmin;
-    margin: 2px;
-    font-size: 1em;
-    border-radius: 5px;
-    background-color: #E75A7C;
+    display: flex;
+    font-size: 1.3rem;
+    text-align: center;
+    flex-wrap: wrap;
+    background-color: #ffb703;
+    justify-content: space-between;
+    height: 8vmin;
+    width: 8vmin;
 }
-.answer{
-    height: 12vmin;
-    width: 70vmin;
+.fb{
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-    background-color: #F2F5EA;
-    border: 1px solid black;
-    border-radius: 3%;
+}
+.get{
+    margin: 2vmin;
+    border-radius: 15%;
+    font-size: 1.3rem;
+    color: #a2d2ff;
+    height: 5vmin;
+    width: 14vmin;
 }

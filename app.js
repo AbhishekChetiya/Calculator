@@ -1,84 +1,131 @@
-let ans = document.querySelector(".answer");
-let add = document.querySelector(".calci");
-let button1 = document.createElement("button");
-let button2 = document.createElement("button");
-let button3 = document.createElement("button");
+let get = document.querySelector(".take");
 
-const add1 = (str) => {
-    let button1 = document.createElement("button");
-    button1.classList.add("box");
-    button1.innerHTML = str;
-    add.append(button1);
+const arr = [];
+
+for (let i = 0; i < 9; i++) {
+    arr[i] = [];
+    for (let j = 0; j < 9; j++) {
+        let input = document.createElement("input");
+        input.type = 'text';
+        input.classList.add("box");
+        get.appendChild(input);
+        arr[i][j] = input;
+    }
 }
-add1("/");
-add1("*");
-add1("<");
-add1("(");
-add1(")");
+let mapr = [];
+let mapc = [];
+const num = 0;
+let mapb = [];
+function solve() {
+    for (let i = 0; i < 9; i++) {
+        mapr[i] = [];
+        mapc[i] = [];
+        for (let j = 0; j < 10; j++) {
+            mapr[i][j] = num;
+            mapc[i][j] = num;
+        }
+    }
+    for (let i = 0; i < 3; i++) {
+        mapb[i] = [];
+        for (let j = 0; j < 3; j++) {
+            mapb[i][j] = [];
+            for (let k = 0; k <= 9; k++) {
+                mapb[i][j][k] = num;
+            }
+        }
+    }
+
+}
+function reset() {
+    let want = document.querySelector(".sf");
+    want.innerText = "Please Give Vaild Input";
+    mapc = [];
+    mapr = [];
+    mapb = [];
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            arr[i][j].value = "";
+        }
+    }
+}
+
 let boxes = document.querySelectorAll(".box");
-let fir = 0;
-let sec = 0;
-let show;
-let opr = "";
-let orgs = "";
-let count = 0;
-const getresult = (data) => {
+let summit = document.querySelector("form button");
+
+const stoi = (data) => {
     try {
-        return eval(data);
+        return Number(data);
     }
     catch {
-        return "INVALID INPUT";
+        return "INVALID";
     }
 }
 
-const arr = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "=", "-", "|", "/", ".", "Backspace", "Enter", "+", "!", "%", "^", "&", "*", "(", ")", "|", ">", "<",">>"];
-let set = new Set(arr);
-document.addEventListener('keypress', function (event) {
-    if (orgs == "INVALID INPUT") orgs = "";
-    if (set.has(event.key)) {
-        if (orgs == "INVALID INPUT") orgs = "";
-        if (event.key == "Backspace") {
-            orgs = orgs.slice(0, orgs.length - 1);
+const solveans = () =>{
+    for(let i=0;i<9;i++){
+        for(let j=0;j<9;j++){
+             if(arr[i][j].value==""){
+                for(let k=1;k<=9;k++){
+                    if(mapc[j][k] || mapr[i][k] || mapb[Math.floor(i/3)][Math.floor(j/3)][k]){}
+                    else{
+                        mapc[j][k] =1;
+                        mapr[i][k] =1; 
+                        mapb[Math.floor(i/3)][Math.floor(j/3)][k] = 1;
+                        arr[i][j].value = k;
+                        console.log(arr[i][j].value);
+                        if(solveans())return true;
+                        mapc[j][k] = 0;
+                        mapr[i][k] = 0; 
+                        mapb[Math.floor(i/3)][Math.floor(j/3)][k] = 0;
+                        arr[i][j].value = "";
+                    }
+                }
+                return false;
+             }
         }
-        else if (event.key == "Enter") {
-            orgs = getresult(orgs);
-        }
-        else {
-            orgs += event.key;
-        }
-        ans.innerHTML = orgs;
     }
-})
-boxes.forEach((box) => {
-    count++;
-    box.addEventListener("click", () => {
-        let get = box.innerHTML;
-        if (orgs == "INVALID INPUT") orgs = "";
-        if (get == "AC") {
-            orgs = "";
+    return true;
+}
+const check = () => {
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            if (arr[i][j].value != "") {
+                let fount = stoi(arr[i][j].value);
+                if (isNaN(fount)) {
+                    reset();
+                    return;
+                }
+                else {
+                    if (fount <= 0 || fount > 9) {
+                        reset();
+                        return;
+                    }
+                    else {
+
+                        if (mapr[i][fount] || mapc[j][fount] || mapb[Math.floor(i / 3)][Math.floor(j / 3)][fount]) {
+                            console.log("ujh");
+                            reset();
+                            return;
+                        }
+                        else {
+                            mapr[i][fount] = 1;
+                            mapc[j][fount] = 1;
+                            mapb[Math.floor(i / 3)][Math.floor(j / 3)][fount] = 1;
+                        }
+                    }
+                }
+            }
         }
-        else if (get == "DEL") {
-            orgs = orgs.slice(0, orgs.length - 1);
-        }
-        else if (get == "ENTER") {
-            orgs = getresult(orgs);
-        }
-        else if (get == "&lt;") {
-            orgs += "<";
-            //   orgs += get;
-        }
-        else if (get == "&gt;") {
-            orgs += ">";
-        }
-        else if (get == "&gt;&gt;") {
-            orgs += ">>";
-        }
-        else if (get == "&amp;") {
-            orgs += "&";
-        }
-        else {
-            orgs += get;
-        }
-        ans.innerText = orgs;
-    })
+    }
+    if(solveans()){
+         let want = document.querySelector(".sf");
+         want.innerText = "Your Shudoko Answer is Here";
+    }
+    else reset();
+    //    return true;
+}
+summit.addEventListener('click', (event) => {
+    event.preventDefault();
+    solve();
+    check();
 })
